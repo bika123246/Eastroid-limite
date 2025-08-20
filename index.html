@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="x-icon" href="logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eastroid Limited - Engineering the Future</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #0a2540;
+            --secondary-color: #0077b6;
+            --accent-color: #48c9b0;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --light-gray: #e9ecef;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--white);
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header & Navigation */
+        .main-header {
+            background: var(--white);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .main-header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--secondary-color);
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(10, 37, 64, 0.8), rgba(10, 37, 64, 0.8)), url('pic1.png') no-repeat center center/cover;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 80px; /* Header height */
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--secondary-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .btn:hover {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--white);
+            margin-left: 1rem;
+        }
+        
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--primary-color);
+        }
+
+        /* Sections */
+        .section {
+            padding: 6rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: #6c757d;
+        }
+
+        /* About Section */
+        #about {
+            background: var(--bg-color);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 2.5rem 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Portfolio Section */
+        #portfolio {
+            background: var(--bg-color);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 37, 64, 0.8);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 5px rgba(0, 119, 182, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-color);
+        }
+
+        /* Footer */
+        .main-footer {
+            background: var(--primary-color);
+            color: var(--light-gray);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .main-footer p {
+            margin: 0;
+        }
+        
+        .main-footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px; /* Header height */
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: var(--white);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: left 0.3s ease;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                margin-top: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header" id="main-header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#hero" class="logo">Eastroid Limited<span>.</span></a>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#about" class="nav-link">About Us</a></li>
+                    <li><a href="#services" class="nav-link">Services</a></li>
+                    <li><a href="#portfolio" class="nav-link">Our Work</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="menu-toggle" id="menu-toggle">
+                    &#9776; <!-- Hamburger Icon -->
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="hero">
+            <div class="hero-content">
+                <h1>Your Trusted Electrician Service</h1>
+                <p>Providing reliable and efficient electrical and communication solutions for homes and businesses.</p>
+                <a href="#services" class="btn">Our Services</a>
+                <a href="#contact" class="btn btn-outline">Get In Touch</a>
+            </div>
+        </section>
+
+        <section class="section" id="about">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Who We Are</h2>
+                    <p>Driven by innovation and a commitment to excellence</p>
+                </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>WELCOME TO EASTROID LIMITED</h3>
+                        <p>Eastroid Limited trading as Eastroid is a duly incorporated company under the 
+Investment Promotion Authority (IPA) on the 26th of July year 2013. It is 100% 
+nationally owned and is based in Port Moresby, Papua New Guinea. The Investment 
+Promotion Authority company registration number is 1 – 89295 and the IRC GST File 
+number is TC55750</p>
+                        <p>Eastroid Limited is pleased to be part of the players with in the Industry. Eastrod Ltd 
+believes in equal opportunity & integrity in dealing with our clients. Eastroid ltd 
+welcomes comments, criticism & opinions to ensure all parties and stakeholders 
+concerned are satisfied with the end product. Eastroid ltd considers professional 
+approach and the of professional and skilled Papua New Guineans workforce as our 
+valuable assets.</p>
+<h3>COMPANY OBJECTIVES OR MISSION STATEMENT
+</h3>
+<p>Our objective is aimed at providing employment for ordinary Papua New Guineans, 
+through its labour. Intensive involvement in the electrical & communication industry 
+as well as training young aspiration Papua New Guineans with necessary skills and 
+knowledge which in returns prepares and enhance skill full Papua New Guineans to 
+meet the vast industry of electrical/communication in the country as a whole.</p>
+<h3>COMPANY GOAL
+</h3>
+<p>Eastroid Ltd goal is to utilize the knowledge and experience of its management and 
+tuffs to seek opportunities, to solve and add value to clients and customers needs</p>
+
+                    </div>
+                    <img src="pic2.png" class="about-image">
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Services we provide</h2>
+                    <p>We specialise in complete installations of electrical services. We also carry out routine 
+maintenance services to existing electrical installations.
+Our in house services include data and electrical cabling installation, thermal image Testing 
+and documentation of implementation. We also install general power systems, earthing and 
+bonding as well as normal and emergency lighting.</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">&#9881;</div> <!-- Gear Icon -->
+                        <h3>UPS Installation (UPS - Uninterruptable Power Supply)
+</h3>
+                        <p>Eastroid has qualified engineers to carry out UPS installations and services that include UPS
+system repair and maintenance services. Our engineers are experienced in installing single 
+and three phase systems. Additionally, installations of online three phase power protection, 
+large capacity and emergency lighting systems can be repaired. Our engineers are also 
+capable of troubleshooting, battery replacement and preventive maintenance.
+</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">&#9881;</div> <!-- Laptop Icon -->
+                        <h3>Electrical Equipment Installation</h3>
+                        <p>Eastroid can provide electrical installations for all types of electrical equipment including 
+power sockets, lighting, power distribution boards, main switch boards and flood lighting. 
+Eastroid can provide clients recommendations of upgrades, repairs or new installations that 
+are required to meet the business need.
+</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">&#9881;</div> <!-- Chart Icon -->
+                        <h3>Data & Voice Cable Installation</h3>
+                        <p>Eastroid Limited can provide cabling design and installation of both data and voice cables. 
+Eastroid Limited is able to deliver and satisfy customer expectations with the expertise that 
+we have acquired through experience and knowledge.
+</p>
+
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">&#9881;</div> <!-- Chart Icon -->
+                        <h3>Data & Voice Cable Installation</h3>
+                        <p>Thermo graphic Imaging provides thermal images of all electrical equipment that may be 
+hazardous. Upon this evaluation, risks can be identified and Eastroid has the ability to schedule planned maintenance to rectify problems therefore mitigating the risks before they 
+turn critical and cause downtime.</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="portfolio">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Work</h2>
+                    <p>A selection of projects that showcase our capabilities</p>
+                </div>
+                <div class="portfolio-grid">
+                    <div class="portfolio-item">
+                        <img src="pic3.png" alt="Project 1">
+                        <div class="portfolio-overlay">
+                            <h5> INSTALLATION OF 30KVA Nx LIEBERT UPS</h5>
+                            <p>Testing, refreshing of UPS memory.</p>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="pic4.png" alt="Project 2">
+                        <div class="portfolio-overlay">
+                            <h5>INSTALLATION OF 4 POLE LOAD CENETRE</h5>
+                            <p> Switchboard after installation</p>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="pic5.png" alt="Project 3">
+                        <div class="portfolio-overlay">
+                            <h5>DATA & CCTV NETWORK CABLING</h5>
+                            <p>UPS Circuits & Network ports Installed.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="contact">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Contact Us</h2>
+                    <p>Let's build the future together. Reach out to start the conversation.</p>
+                </div>
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <h4>PHYSICAL COMPANY ADDRESS</h4>
+            <h5>Our postal address is P.O. Box 813, Vision City. Waigani National Capital District, 
+Papua New Guinea<br> 
+Ph: (+ 675 ) 709 96412 or 762 05147<br>
+Email: eastroidltd@gmail.com or jbka07@gmail.com
+</h5><hr><br>
+            <p>&copy; 2025 Eastroid Limited. All Rights Reserved. Designed by Gideon Bika.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.getElementById('main-header');
+            const navLinksContainer = document.getElementById('nav-links');
+            const menuToggle = document.getElementById('menu-toggle');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            // Header scroll effect
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+
+            // Mobile menu toggle
+            menuToggle.addEventListener('click', () => {
+                navLinksContainer.classList.toggle('active');
+            });
+
+            // Close mobile menu when a link is clicked
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navLinksContainer.classList.contains('active')) {
+                        navLinksContainer.classList.remove('active');
+                    }
+                });
+            });
+
+            // Active link highlighting on scroll
+            const sections = document.querySelectorAll('section');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 150) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+            
+            // Form submission
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your message! We will get back to you shortly.');
+                contactForm.reset();
+            });
+        });
+    </script>
+
+</body>
+</html>
